@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Bureaucrat.hpp"
 
-class Form
+class AForm
 {
     private:
         const std::string name;
@@ -11,16 +11,17 @@ class Form
         const int recquiredgrade;
         const int executegrade;
     public:
-        Form();
-        Form(const Form& other);
-        Form(const std::string name, bool isSigned, const int recquiredgrade, const int executegrade);
-        Form& operator=(const Form& other);
+        AForm();
+        AForm(const AForm& other);
+        AForm(const std::string name, bool isSigned, const int recquiredgrade, const int executegrade);
+        AForm& operator=(const AForm& other);
         std::string getname() const;
         bool  getisSigned() const;
         int getrecquiredgrade() const;
         int getexecutegrade() const;
         void beSigned(Bureaucrat& em);
-        ~Form();
+        virtual void execute(Bureaucrat const & executor) const = 0;
+        virtual ~AForm();
         class GradeTooHighException : public std::exception
         {
             public:
@@ -32,4 +33,4 @@ class Form
                 const char* what() const throw();
         };
 };
-std::ostream& operator<<(std::ostream& os, Form& form);
+std::ostream& operator<<(std::ostream& os, AForm& form);
